@@ -1,0 +1,88 @@
+<html><head>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bentham&display=swap" rel="stylesheet">
+<script src="/assets/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+body {
+ text-align: center;
+ font-family: 'Fjalla One';
+ font-size: 20px;
+ background: #B3FF8F;
+}
+button {
+ margin: 40px; 
+}
+input {
+  font-size: 24px;
+}
+.fill {
+ background: white;
+ color: blue;
+ border-bottom: 2px black solid;
+ font-family: 'Source Sans Pro', sans-serif;
+ padding: 0 6px;
+ margin: 4px;
+}
+</style>
+</head>
+
+<body>
+<div class="prompt">Introduzca sus apellidos<br><input type="text"></div>
+<button>Siguiente</button>
+<script>
+// List of prompts for the user
+var prompts = [
+	'Introduzca su nombre',
+	'Introduzca sus apellidos',
+	'Introduzca su edad'
+   ];
+
+var answers=[];
+// Keep track of current prompt we're on
+var currentPrompt = 0;
+
+// A function that will call the next prompt
+var nextPrompt = function() {
+  //if there's no answer in the form
+  if (currentPrompt != 0){
+    answers.push($('input').val());
+  }
+	// if there is a next prompt
+	if (currentPrompt < prompts.length) {
+		// put first prompt in all html elements with class 
+		$('.prompt').html(prompts[currentPrompt] +'<br><input type="text">');
+		// move the next prompt into variable currentPrompt 
+		currentPrompt = currentPrompt + 1;
+	}
+	//or else if we're at the end of the array
+	else {
+		// put a new message into the html.
+		showFinal();
+	}
+}
+
+//puts user answers into HTML
+var showFinal = function() {
+  if (answers[2]>=18) {
+    $('.prompt').html('Bienvenido a nuestra página Sr. <span class="fill">'+answers[1]+'</span> , <span class="fill">'+answers[0]+'</span>.');
+    // and then hide the button
+    $('button').hide();
+  }
+  else {
+    $('.prompt').html('Lo sentimos Sr. <span class="fill">'+answers[1]+'</span> , <span class="fill">'+answers[0]+'</span> . Los menores no pueden acceder a nuestra web.');
+    // and then hide the button
+    $('button').hide();
+  }
+}
+// run nextPrompt function when button is clicked
+$('button').click(function() {
+	nextPrompt();
+});
+
+// Show the first prompt as soon as js loads
+nextPrompt();
+</script>
+
+
+</body></html>
